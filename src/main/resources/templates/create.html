@@ -56,6 +56,15 @@
             <label for="name" class="form-label">담당자 이름</label>
             <input type="text" class="form-control" id="name" name="name" required>
         </div>
+        <div class="mb-3">
+            <label for="type" class="form-label">프로젝트 타입</label>
+            <select class="form-select" id="type" name="type" required>
+                <option value="">프로젝트 타입 선택</option>
+                <option value="Construction">공사</option>
+                <option value="Service">용역</option>
+                <option value="Simple_Service">간이용역</option>
+            </select>
+        </div>
         <button type="submit" class="btn-submit">프로젝트 생성</button>
     </form>
 </div>
@@ -66,11 +75,19 @@
         event.preventDefault();  // Prevent the form from submitting the default way
         const title = document.getElementById('title').value;
         const name = document.getElementById('name').value;
+        const type = document.getElementById('type').value;
+
+        // Validate that a type has been selected
+        if (!type) {
+            alert('프로젝트 타입을 선택해 주세요.');
+            return;
+        }
 
         // Prepare the form data as URL encoded format
         const params = new URLSearchParams();
         params.append('title', title);
         params.append('name', name);
+        params.append('type', type);  // Include the project type in the request
 
         fetch('/create', {
             method: 'POST',

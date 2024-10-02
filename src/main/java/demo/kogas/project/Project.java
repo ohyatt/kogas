@@ -27,12 +27,10 @@ public class Project {
 
     public Project(){
     }
-    public Project(Type type) {
-        this.type = type;
-    }
 
-    public Project(String title, String name){
+    public Project(String title, String name,Type type) {
         this.title = title;
         this.name = name;
+        this.type = type;
     }
 }
