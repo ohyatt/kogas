@@ -84,7 +84,7 @@
 </div>
 
 <div class="container">
-    <h2>프로젝트 목록</h2>
+    <h2>진행 중인 프로젝트 목록</h2>
     <table>
         <thead>
         <tr>
@@ -97,7 +97,7 @@
         </thead>
         <tbody>
         <tr th:if="${projects.size() == 0}">
-            <td colspan="5">현재 프로젝트가 없습니다.</td>
+            <td colspan="5">현재 진행 중인 프로젝트가 없습니다.</td>
         </tr>
         <tr th:each="project : ${projects}">
             <td th:text="${project.id}"></td>
