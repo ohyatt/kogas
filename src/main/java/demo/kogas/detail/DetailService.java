@@ -11,11 +11,14 @@ public class DetailService {
     @Autowired
     private DetailRepository detailRepository;
 
-    public String saveProposal(Long id, List<String> filePaths){
-        // filePaths를 사용하여 파일 경로 처리
-        for (String filePath : filePaths) {
-            System.out.println("Uploaded file path: " + filePath);
-        }
+    public String saveProposal(Long id, List<String> proposal){
+        Detail detail = detailRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Detail not found"));
+
+        detail.setProposal(proposal);
+
+        detailRepository.save(detail);
+        return "Success";
     }
 
 

@@ -265,13 +265,15 @@
             }
         }
 
+
+        const id = getIdFromUrl(); // URL에서 ID 가져오기
         try {
-            const response = await fetch(`/detail/{id}`, {
+            const response = await fetch(`/detail/${id}`, { // 실제 ID를 사용
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ filePaths }),
+                body: JSON.stringify(filePaths), // 수정: filePaths를 직접 전송
             });
 
             if (!response.ok) {

@@ -12,7 +12,7 @@ import java.util.List;
 public class DetailController {
 
     @Autowired
-    private final DetailService detailService;
+    private DetailService detailService;
 
     //프로젝트 세부사항 폼
     @GetMapping("/{id}")
@@ -22,8 +22,8 @@ public class DetailController {
 
     //1. 공사시행 품의 필요서류 업로드
     @PostMapping("/{id}")
-    public ResponseEntity<String> saveProposal(@PathVariable Long id, @RequestBody List<String> filePaths) {
-        return ResponseEntity.ok(detailService.saveProposal(id, filePaths));
+    public ResponseEntity<String> saveProposal(@PathVariable Long id, @RequestBody List<String> proposal) {
+        return ResponseEntity.ok(detailService.saveProposal(id, proposal));
     }
 
 }
