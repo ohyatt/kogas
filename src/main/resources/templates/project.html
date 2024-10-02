@@ -85,6 +85,34 @@
         .hidden {
             display: none;
         }
+        table {
+            width: 100%;
+            max-width: 800px;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background-color: white;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+        th, td {
+            padding: 15px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+        th {
+            background-color: #003366;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        h2 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .save-btn {
+            margin-top: 20px;
+            align-self: center;
+        }
     </style>
 </head>
 <body>
@@ -98,7 +126,6 @@
     <div id="sidebarContainer" class="content-container">
         <div class="sidebar">
             <ul>
-                <li onclick="showSection('taskCreation')">업무 생성</li>
                 <li onclick="showSection('proposal')">공사시행 품의</li>
                 <li onclick="showSection('contractRequest')">계약의뢰</li>
                 <li onclick="showSection('constructionManagement')">건설사업 관리</li>
@@ -112,29 +139,42 @@
         </div>
 
         <div class="content">
-            <div id="selectType" class="hidden">
-                <h2>업무 선택</h2>
-                <p>
-                    <!-- 업무 선택 드롭다운 -->
-                    <select id="taskType">
-                        <option value="">업무 선택</option>
-                        <option value="Construction">공사</option>
-                        <option value="Service">용역</option>
-                        <option value="Simple_Service">간이용역</option>
-                    </select>
-                </p>
-
-                <!-- Form to submit selected task type -->
-                <form id="taskForm" method="POST" onsubmit="return submitTask()">
-                    <input type="hidden" id="taskInput" name="taskType">
-                    <button type="submit">저장</button>
-                </form>
-            </div>
-
             <div id="proposal" class="hidden">
                 <h2>공사시행 품의</h2>
-                <p>공사시행 품의 관련 내용을 표시합니다.</p>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>필요서류</th>
+                        <th>업로드 버튼</th>
+                        <th>상태</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>공사설계서</td>
+                        <td><input type="file" id="designFile" onchange="uploadFile('designFileStatus', this)"></td>
+                        <td id="designFileStatus"> </td>
+                    </tr>
+                    <tr>
+                        <td>공사시방서</td>
+                        <td><input type="file" id="specFile" onchange="uploadFile('specFileStatus', this)"></td>
+                        <td id="specFileStatus"> </td>
+                    </tr>
+                    <tr>
+                        <td>설계내역서</td>
+                        <td><input type="file" id="detailsFile" onchange="uploadFile('detailsFileStatus', this)"></td>
+                        <td id="detailsFileStatus"> </td>
+                    </tr>
+                    <tr>
+                        <td>기술검토 필요 유무</td>
+                        <td><input type="file" id="reviewFile" onchange="uploadFile('reviewFileStatus', this)"></td>
+                        <td id="reviewFileStatus"> </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <button class="btn save-btn" onclick="saveProposal()">저장</button>
             </div>
+
 
             <div id="contractRequest" class="hidden">
                 <h2>계약의뢰</h2>
@@ -198,31 +238,55 @@
         return id;
     }
 
-    //업무 타입 선택
-    function submitTask() {
-        // 선택된 업무 타입 가져오기
-        const selectedTask = document.getElementById('taskType').value;
-        if (!selectedTask) {
-            alert('업무 종류를 선택해 주세요.');
-            return false;
+    function uploadFile(statusCellId, input) {
+        const file = input.files[0]; // 선택한 파일
+        const statusCell = document.getElementById(statusCellId);
+
+        if (file) {
+            statusCell.textContent = 'O';  // 파일이 선택된 경우
+        } else {
+            statusCell.textContent = '';  // 파일이 선택되지 않은 경우
         }
-
-        // URL에서 id 값 추출
-        const id = getIdFromUrl();
-        if (!id) {
-            alert('ID 값을 확인할 수 없습니다.');
-            return false;
-        }
-
-        // 선택된 업무 타입을 hidden input에 설정
-        document.getElementById('taskInput').value = selectedTask;
-
-        // form의 action을 동적으로 설정 (POST 요청의 경로)
-        const form = document.getElementById('taskForm');
-        form.action = `/detail/${id}`;
-
-        return true;  // 폼을 제출합니다.
     }
+
+    async function saveProposal() {
+        const fileIds = ['designFile', 'specFile', 'detailsFile', 'reviewFile'];
+        const filePaths = [];
+
+        for (const fileId of fileIds) {
+            const input = document.getElementById(fileId);
+            const statusCell = document.getElementById(`${fileId}Status`);
+
+            if (input.files.length > 0) {
+                filePaths.push(`/uploads/${input.files[0].name}`); // 예시로 파일명 사용
+                statusCell.textContent = 'O';  // 상태 업데이트
+            } else {
+                statusCell.textContent = '';  // 파일이 없을 경우 상태 초기화
+            }
+        }
+
+        try {
+            const response = await fetch(`/detail/{id}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ filePaths }),
+            });
+
+            if (!response.ok) {
+                throw new Error('네트워크 응답이 이상합니다.');
+            }
+
+            alert('파일이 성공적으로 저장되었습니다.');
+        } catch (error) {
+            console.error('Error:', error);
+            alert('파일 저장 중 오류가 발생했습니다.');
+        }
+    }
+
+
+
 </script>
 
 </body>

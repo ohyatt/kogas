@@ -1,5 +1,6 @@
 package demo.kogas.project;
 
+import demo.kogas.detail.Detail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +18,7 @@ public class ProjectService {
 
     public Project createProject(String title, String name, Type type) {
         Project project = new Project(title, name, type);
+        Detail detail = new Detail();
         projectRepository.save(project);
         System.out.println("Created project ID: " + project.getId());
         return project;  // 프로젝트 객체를 반환하여 id 포함

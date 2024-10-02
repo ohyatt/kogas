@@ -5,6 +5,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/detail")
 public class DetailController {
@@ -18,11 +20,10 @@ public class DetailController {
         return "project";
     }
 
-    //1. 업무 선택
+    //1. 공사시행 품의 필요서류 업로드
     @PostMapping("/{id}")
-    public ResponseEntity<String> selectTask(@PathVariable("id") Long id, @RequestParam("taskType") String taskType) {
-        detailService.selectTask(id, taskType);
-        return ResponseEntity.ok("Task selected successfully");
+    public ResponseEntity<String> saveProposal(@PathVariable Long id, @RequestBody List<String> filePaths) {
+        return ResponseEntity.ok(detailService.saveProposal(id, filePaths));
     }
 
 }
