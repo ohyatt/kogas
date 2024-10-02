@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KOGAS 공사 용역 통합 관리 프로그램</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+        .header {
+            background-color: #003366;
+            color: white;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .title {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .btn {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        .btn:hover {
+            background-color: #45a049;
+        }
+        .container {
+            display: flex;
+            flex-grow: 1;
+            height: 100%;
+        }
+        .sidebar {
+            background-color: #e0e0e0;
+            padding: 20px;
+            width: 200px;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+            box-sizing: border-box;
+            overflow-y: auto;
+        }
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+        .sidebar ul li {
+            padding: 10px;
+            margin-bottom: 10px;
+            background-color: #fff;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        .sidebar ul li:hover {
+            background-color: #ddd;
+        }
+        .content-container {
+            display: flex;
+            flex-grow: 1;
+            background-color: #fff;
+            box-sizing: border-box;
+            overflow-y: auto;
+        }
+        .content {
+            padding: 20px;
+            flex-grow: 1;
+            background-color: #fff;
+            box-sizing: border-box;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <div class="title">KOGAS 공사 용역 통합 관리 프로그램</div>
+</div>
+
+<div class="container">
+
+    <div id="sidebarContainer" class="content-container">
+        <div class="sidebar">
+            <ul>
+                <li onclick="showSection('taskCreation')">업무 생성</li>
+                <li onclick="showSection('proposal')">공사시행 품의</li>
+                <li onclick="showSection('contractRequest')">계약의뢰</li>
+                <li onclick="showSection('constructionManagement')">건설사업 관리</li>
+                <li onclick="showSection('contractExecution')">계약체결</li>
+                <li onclick="showSection('constructionPlanApproval')">공사계획 신고/승인</li>
+                <li onclick="showSection('startingDocuments')">착공 서류</li>
+                <li onclick="showSection('constructionExecution')">공사 시행</li>
+                <li onclick="showSection('completion')">공사 준공</li>
+                <li onclick="showSection('followUpTasks')">후속 업무</li>
+            </ul>
+        </div>
+
+        <div class="content">
+            <div id="taskCreation" class="hidden">
+                <h2>업무 생성</h2>
+                <p>
+                    <!-- 업무 선택 드롭다운 -->
+                    <select id="taskType">
+                        <option value="">업무 선택</option>
+                        <option value="Construction">공사</option>
+                        <option value="Service">용역</option>
+                        <option value="Simple_Service">간이용역</option>
+                    </select>
+                </p>
+
+                <!-- Form to submit selected task type -->
+                <form id="taskForm" method="POST" action="/taskCreation" onsubmit="return submitTask()">
+                    <input type="hidden" id="taskInput" name="taskType">
+                    <button type="submit">업무 생성하기</button>
+                </form>
+            </div>
+
+            <div id="proposal" class="hidden">
+                <h2>공사시행 품의</h2>
+                <p>공사시행 품의 관련 내용을 표시합니다.</p>
+            </div>
+
+            <div id="contractRequest" class="hidden">
+                <h2>계약의뢰</h2>
+                <p>계약의뢰 관련 내용을 표시합니다.</p>
+            </div>
+
+            <div id="constructionManagement" class="hidden">
+                <h2>건설사업 관리</h2>
+                <p>건설사업 관리 관련 내용을 표시합니다.</p>
+            </div>
+
+            <div id="contractExecution" class="hidden">
+                <h2>계약체결</h2>
+                <p>계약체결 관련 내용을 표시합니다.</p>
+            </div>
+
+            <div id="constructionPlanApproval" class="hidden">
+                <h2>공사계획 신고/승인</h2>
+                <p>공사계획 신고/승인 관련 내용을 표시합니다.</p>
+            </div>
+
+            <div id="startingDocuments" class="hidden">
+                <h2>착공 서류</h2>
+                <p>착공 서류 관련 내용을 표시합니다.</p>
+            </div>
+
+            <div id="constructionExecution" class="hidden">
+                <h2>공사 시행</h2>
+                <p>공사 시행 관련 내용을 표시합니다.</p>
+            </div>
+
+            <div id="completion" class="hidden">
+                <h2>공사 준공</h2>
+                <p>공사 준공 관련 내용을 표시합니다.</p>
+            </div>
+
+            <div id="followUpTasks" class="hidden">
+                <h2>후속 업무</h2>
+                <p>후속 업무 관련 내용을 표시합니다.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    function showSection(sectionId) {
+        const sections = document.querySelectorAll('.content > div');
+        sections.forEach(section => section.classList.add('hidden'));
+
+        const activeSection = document.getElementById(sectionId);
+        if (activeSection) {
+            activeSection.classList.remove('hidden');
+        }
+    }
+
+    function submitTask() {
+        const selectedTask = document.getElementById('taskType').value;
+        if (!selectedTask) {
+            alert('업무 종류를 선택해 주세요.');
+            return false;
+        }
+        document.getElementById('taskInput').value = selectedTask;
+        return true;
+    }
+</script>
+
+</body>
+</html>
