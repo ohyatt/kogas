@@ -35,25 +35,4 @@ public class ProjectController {
     public ResponseEntity<Project> createProject(@RequestParam("title") String title, @RequestParam("name") String name) {
         return ResponseEntity.ok(projectService.createProject(title, name));  // Project 객체를 반환하여 id 포함
     }
-
-
-//    @PostMapping("/create")
-//    public ResponseEntity<Project> createProject(@RequestParam("title") String title, @RequestParam("name") String name) {
-//        Project project = projectService.createProject(title, name);
-//        System.out.println("Created project ID: " + project.getId());  // 로그로 ID 확인
-//        return ResponseEntity.ok(project);
-//    }
-
-
-    @GetMapping("detail/{id}")
-    public String formDetail() {
-        return "project";
-    }
-
-//    //프로젝트 생성
-//    @PostMapping("/taskCreation")
-//    public ResponseEntity<Object> createProject(@RequestParam("taskType") Type type){
-//        return ResponseEntity.ok(projectService.createProject(type));
-//    }
-
 }

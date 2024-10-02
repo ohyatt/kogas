@@ -112,8 +112,8 @@
         </div>
 
         <div class="content">
-            <div id="taskCreation" class="hidden">
-                <h2>업무 생성</h2>
+            <div id="selectType" class="hidden">
+                <h2>업무 선택</h2>
                 <p>
                     <!-- 업무 선택 드롭다운 -->
                     <select id="taskType">
@@ -125,9 +125,9 @@
                 </p>
 
                 <!-- Form to submit selected task type -->
-                <form id="taskForm" method="POST" action="/taskCreation" onsubmit="return submitTask()">
+                <form id="taskForm" method="POST" onsubmit="return submitTask()">
                     <input type="hidden" id="taskInput" name="taskType">
-                    <button type="submit">업무 생성하기</button>
+                    <button type="submit">저장</button>
                 </form>
             </div>
 
@@ -191,14 +191,37 @@
         }
     }
 
+    //현재 URL에서 ID 추출
+    function getIdFromUrl() {
+        const pathParts = window.location.pathname.split('/');
+        const id = pathParts[pathParts.length - 1];
+        return id;
+    }
+
+    //업무 타입 선택
     function submitTask() {
+        // 선택된 업무 타입 가져오기
         const selectedTask = document.getElementById('taskType').value;
         if (!selectedTask) {
             alert('업무 종류를 선택해 주세요.');
             return false;
         }
+
+        // URL에서 id 값 추출
+        const id = getIdFromUrl();
+        if (!id) {
+            alert('ID 값을 확인할 수 없습니다.');
+            return false;
+        }
+
+        // 선택된 업무 타입을 hidden input에 설정
         document.getElementById('taskInput').value = selectedTask;
-        return true;
+
+        // form의 action을 동적으로 설정 (POST 요청의 경로)
+        const form = document.getElementById('taskForm');
+        form.action = `/detail/${id}`;
+
+        return true;  // 폼을 제출합니다.
     }
 </script>
 
