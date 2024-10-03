@@ -21,5 +21,15 @@ public class DetailService {
         return "Success";
     }
 
+    public String saveRequest(Long id, List<String> request){
+        Detail detail = detailRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Detail not found"));
+
+        detail.setRequest(request);
+
+        detailRepository.save(detail);
+        return "Success";
+    }
+
 
 }

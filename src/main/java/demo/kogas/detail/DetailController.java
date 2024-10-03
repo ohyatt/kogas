@@ -22,8 +22,18 @@ public class DetailController {
 
     //1. 공사시행 품의 필요서류 업로드
     @PostMapping("/{id}")
-    public ResponseEntity<String> saveProposal(@PathVariable Long id, @RequestBody List<String> proposal) {
-        return ResponseEntity.ok(detailService.saveProposal(id, proposal));
+    public ResponseEntity<String> saveProposal(@PathVariable Long id, @RequestBody DetailRequestDTO detailRequestDTO) {
+        String phase = detailRequestDTO.getPhase();
+        List<String> data = detailRequestDTO.getData();
+
+        // phase에 따라 다른 서비스 메서드를 호출
+        if ("proposal".equals(phase)) {
+            return ResponseEntity.ok(detailService.saveProposal(id,data));
+        } else if ("contractRequest".equals(phase)) {
+            return ResponseEntity.ok(detailService.saveRequest(id,data));
+        } else {
+            return ResponseEntity.badRequest().body("Invalid type");
+        }
     }
 
 }

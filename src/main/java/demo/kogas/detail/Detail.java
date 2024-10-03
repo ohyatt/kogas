@@ -26,6 +26,10 @@ public class Detail {
     @Column(name="proposal")
     private List<String> proposal;
 
+    @ElementCollection
+    @Column(name="request")
+    private List<String> request;
+
     public Detail() {
     }
 }
