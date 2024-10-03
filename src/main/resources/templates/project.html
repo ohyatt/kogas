@@ -146,7 +146,7 @@
                     <thead>
                     <tr>
                         <th>필요서류</th>
-                        <th>업로드 버튼</th>
+                        <th>파일 업로드</th>
                         <th>상태</th>
                     </tr>
                     </thead>
@@ -173,13 +173,48 @@
                     </tr>
                     </tbody>
                 </table>
-                <button class="btn save-btn" onclick="saveProposal()">저장</button>
+                <button class="btn save-btn" onclick="saveRequest()">저장</button>
             </div>
-
 
             <div id="contractRequest" class="hidden">
                 <h2>계약의뢰</h2>
-                <p>계약의뢰 관련 내용을 표시합니다.</p>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>필요서류</th>
+                        <th>파일 업로드</th>
+                        <th>상태</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>공사설명서</td>
+                        <td><input type="file" id="designFile" onchange="uploadFile('designFileStatus', this)"></td>
+                        <td id="designFileStatus"> </td>
+                    </tr>
+                    <tr>
+                        <td>입찰 및 계약 추진시 반영 요청사항</td>
+                        <td><input type="file" id="specFile" onchange="uploadFile('specFileStatus', this)"></td>
+                        <td id="specFileStatus"> </td>
+                    </tr>
+                    <tr>
+                        <td>상생발주 체크리스트</td>
+                        <td><input type="file" id="detailsFile" onchange="uploadFile('detailsFileStatus', this)"></td>
+                        <td id="detailsFileStatus"> </td>
+                    </tr>
+                    <tr>
+                        <td>공정계약 체크리스트</td>
+                        <td><input type="file" id="reviewFile" onchange="uploadFile('reviewFileStatus', this)"></td>
+                        <td id="reviewFileStatus"> </td>
+                    </tr>
+                    <tr>
+                        <td>안전사고 예방 특수조건</td>
+                        <td><input type="file" id="reviewFile" onchange="uploadFile('reviewFileStatus', this)"></td>
+                        <td id="reviewFileStatus"> </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <button class="btn save-btn" onclick="saveProposal()">저장</button>
             </div>
 
             <div id="constructionManagement" class="hidden">
