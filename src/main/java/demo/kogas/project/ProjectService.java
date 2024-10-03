@@ -5,6 +5,7 @@ import demo.kogas.detail.DetailRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -19,9 +20,12 @@ public class ProjectService {
         return projectRepository.findAll();
     }
 
-    public Project createProject(String title, String name, Type type) {
-        Project project = new Project(title, name, type);
+    public Project createProject(String title, String name, Type type, String startDate, String endDate) {
+        LocalDate start = LocalDate.parse(startDate);
+        LocalDate end = LocalDate.parse(endDate);
+        Project project = new Project(title, name, type, start, end);
         Detail detail = new Detail();
+        detail.setProject(project);
         projectRepository.save(project);
         detailRepository.save(detail);
         System.out.println("Created project ID: " + project.getId());

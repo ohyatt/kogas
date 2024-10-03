@@ -32,7 +32,7 @@ public class ProjectController {
 
     //프로젝트 생성
     @PostMapping("/create")
-    public ResponseEntity<Project> createProject(@RequestParam("title") String title, @RequestParam("name") String name, @RequestParam("type") Type type) {
-        return ResponseEntity.ok(projectService.createProject(title, name,type));  // Project 객체를 반환하여 id 포함
+    public ResponseEntity<Project> createProject(@RequestParam("title") String title, @RequestParam("name") String name, @RequestParam("type") Type type, @RequestParam("startDate") String startDate, @RequestParam("endDate") String endDate) {
+        return ResponseEntity.ok(projectService.createProject(title, name,type, startDate,endDate));  // Project 객체를 반환하여 id 포함
     }
 }

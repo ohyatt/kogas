@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
+
 @Entity
 @Getter
 @Setter
@@ -25,12 +27,20 @@ public class Project {
     @Column(name = "name")
     private String name;
 
+    @Column(name = "startDate")
+    private LocalDate startDate;
+
+    @Column(name = "endDate")
+    private LocalDate endDate;
+
     public Project(){
     }
 
-    public Project(String title, String name,Type type) {
+    public Project(String title, String name,Type type, LocalDate startDate, LocalDate endDate) {
         this.title = title;
         this.name = name;
         this.type = type;
+        this.startDate = startDate;
+        this.endDate = endDate;
     }
 }

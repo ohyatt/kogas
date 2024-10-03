@@ -13,6 +13,37 @@
             align-items: center;
             height: 100vh;
         }
+        .header {
+            background-color: #003366;
+            color: white;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            box-sizing: border-box;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+        .title {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .btn {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        .btn:hover {
+            background-color: #45a049;
+        }
         .form-container {
             background-color: white;
             padding: 30px;
@@ -44,6 +75,10 @@
     </style>
 </head>
 <body>
+<div class="header">
+    <div class="title">KOGAS 공사 용역 통합 관리 프로그램</div>
+    <button class="btn" onclick="location.href='/'">프로젝트 목록 보기</button>
+</div>
 
 <div class="form-container">
     <h2>프로젝트 생성</h2>
@@ -65,6 +100,14 @@
                 <option value="Simple_Service">간이용역</option>
             </select>
         </div>
+        <div class="mb-3">
+            <label for="startDate" class="form-label">시작일</label>
+            <input type="date" class="form-control" id="startDate" name="startDate" required>
+        </div>
+        <div class="mb-3">
+            <label for="endDate" class="form-label">마감일</label>
+            <input type="date" class="form-control" id="endDate" name="endDate" required>
+        </div>
         <button type="submit" class="btn-submit">프로젝트 생성</button>
     </form>
 </div>
@@ -76,6 +119,8 @@
         const title = document.getElementById('title').value;
         const name = document.getElementById('name').value;
         const type = document.getElementById('type').value;
+        const startDate = document.getElementById('startDate').value;
+        const endDate = document.getElementById('endDate').value;
 
         // Validate that a type has been selected
         if (!type) {
@@ -87,7 +132,9 @@
         const params = new URLSearchParams();
         params.append('title', title);
         params.append('name', name);
-        params.append('type', type);  // Include the project type in the request
+        params.append('type', type);
+        params.append('startDate', startDate);
+        params.append('endDate', endDate);
 
         fetch('/create', {
             method: 'POST',
