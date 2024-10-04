@@ -141,7 +141,11 @@
 
         <div class="content">
             <div id="proposal" class="hidden">
-                <h2>공사시행 품의</h2>
+                <div style="display: flex; align-items: center; gap:600px;">
+                    <h2>공사시행 품의</h2>
+                    <button class="btn save-btn" onclick="saveProposal()">저장</button>
+                </div>
+
                 <table class="table">
                     <thead>
                     <tr>
@@ -173,11 +177,35 @@
                     </tr>
                     </tbody>
                 </table>
-                <button class="btn save-btn" onclick="saveProposal()">저장</button>
+
+
+                <h2>요청부서 / 결재라인</h2>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>결재단계</th>
+                        <th>결재자</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>요청</td>
+                        <td>신은정 대리 / 부산경남지역본부 설비운영부</td>
+                    </tr>
+                    <tr>
+                        <td>1단계 / 결재</td>
+                        <td>윤용태 부장 / 부산경남지역본부 설비운영부</td>
+                    </tr>
+                    </tbody>
+                </table>
+
             </div>
 
             <div id="contractRequest" class="hidden">
-                <h2>계약의뢰</h2>
+                <div style="display: flex; align-items: center; gap:650px;">
+                    <h2>계약의뢰</h2>
+                    <button class="btn save-btn" onclick="saveRequest()">저장</button>
+                </div>
                 <table class="table">
                     <thead>
                     <tr>
@@ -214,7 +242,26 @@
                     </tr>
                     </tbody>
                 </table>
-                <button class="btn save-btn" onclick="saveRequest()">저장</button>
+
+                <h2>요청부서 / 결재라인</h2>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>결재단계</th>
+                        <th>결재자</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>요청</td>
+                        <td>신은정 대리 / 부산경남지역본부 설비운영부</td>
+                    </tr>
+                    <tr>
+                        <td>1단계 / 결재</td>
+                    </tr>
+                    </tbody>
+                </table>
+
             </div>
 
             <div id="constructionManagement" class="hidden">
