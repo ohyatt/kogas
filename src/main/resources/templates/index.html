@@ -139,12 +139,13 @@
             </tr>
             <tr th:each="project : ${projects}">
                 <td th:text="${project.id}"></td>
-                <td th:switch="${project.type}">
+                <td th:switch="${project.type.name()}">
                     <span th:case="'Construction'">공사</span>
                     <span th:case="'Service'">용역</span>
                     <span th:case="'Simple_Service'">간이용역</span>
                     <span th:case="*">알 수 없는 유형</span>
                 </td>
+
                 <td th:text="${project.title}"></td>
                 <td th:text="${project.startDate}"></td>
                 <td th:text="${project.endDate}"></td>
